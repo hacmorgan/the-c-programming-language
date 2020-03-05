@@ -1,0 +1,54 @@
+* A tutorial introduction
+** Data types
+C has a number of data types: 
+- =char=: one byte 
+- =int=: integer (size machine dependent, 4 bytes on 64-bit arch)
+- =short=: short integer (size machine dependent. 2 bytes on 64-bit arch)
+- =long=: long integer (size machine dependent. 8 bytes on 64-bit arch)
+- =float=: floating point (size machine dependent. 4 bytes on 64-bit arch)
+- =double=: double precision floating point (size machine dependent. 8 bytes on 64-bit arch)
+
+*** [[./chapter-1/farenToCelc.c][Farenheit to celsius]]
+In the farenheit to celsius converter, we write
+#+BEGIN_SRC C
+celsius = 5 * (fahr-32)/9 
+#+END_SRC
+because integer division truncates any fractional part, so if we wrote
+#+BEGIN_SRC C
+celsius = 5/9 * (fahr-32)
+#+END_SRC
+the =5/9= would be truncated to 0.
+
+If we use floats instead, we can use the second code block, but *we must use =5.0/9.0=, as constants must be declared with decimals to be assumed floats*. We have also written =fahr-32.0= to be consistent, but the mixing of an integer and a float will implicitly cast the integer to a float.
+
+**** Formatting =printf=
+Originally we had:
+#+BEGIN_SRC C
+printf("%d\t%d\n", fahr, celsius);
+#+END_SRC
+But the output numbers weren't nicely justified. If we include a number in each =%d=, then the output will be right justified as many characters as we specify, so we change the above line to:
+#+BEGIN_SRC C
+printf("%3d %6d\n", fahr, celsius);
+#+END_SRC
+
+And for floats:
+#+BEGIN_SRC C
+printf("%3.0f %6.1f\n", fahr, celsius);
+#+END_SRC
+Will print the farenheit values' integer components only, and the celsius values to 1 decimal place
+
+=printf= also recognises:
+- =%o= for octal
+- =%x= for hexadecimal
+- =%c= for character
+- =%%= for % 
+  
+*** [[./chapter-1/farenToCelcFor.c][Farenheit to celsius using a for loop]]
+In this file we cut down the contents of =main= to 3 lines! It's quite simple but the novel part is the third argument of printf, which replaces =celsius= from the previous version with an expression that calculates celsius.
+
+** Character input and output
+A text stream is a sequence of characters divided into lines, where each line contains 0 or more characters, separated by the /newline/ character. Pretty simple stuff. The standard library provides a number of functions for reading and writing one character at a time, the simplest of which are =getchar= and =putchar=, which do exactly as it looks like they do. They are usually applied to keyboard input, as there are other ways to read input from files.
+
+*** [[./chapter-1/echo.c][Copying input to output]]
+This simple program continues taking characters from STDIN until it receives an EOF character, and printing them to STDOUT. We must define our input character as an =int= rather than a =char=, because =getchar= muct be able to return *any* =char=, as well as anything distinct from a =char=, which will be interpreted as EOF.
+
