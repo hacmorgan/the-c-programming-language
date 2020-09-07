@@ -1,0 +1,1 @@
+gcc -std=c90 atof.c main.c getline.c
