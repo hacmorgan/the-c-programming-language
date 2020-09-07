@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <ctype.h>
 
 /* atof: convert string s to double */
@@ -26,11 +27,18 @@ double atof( char s[] )
         power *= 10;
     }
     result = sign * val / power;
-    
     if ( s[i] == 'e' || s[i] == 'E' ) {
-        exponentSign = ( s[++i] == '-' ) ? -1 : 1;
-        for ( exponent=0, ++i ; isdigit(s[i]) ; i++ ) {
+        if ( s[++i] == '-' ) {
+            exponentSign = -1;
+            i++;
+        } else {
+            exponentSign = 1;
+        }
+        for ( exponent=0 ; isdigit(s[i]) ; i++ ) {
             exponent = 10 * exponent + ( s[i] - '0' );
+        }
+        if ( exponentSign == -1 ) {
+            exponent = -exponent;
         }
         while ( exponent < 0 ) {
             result /= 10;
@@ -41,6 +49,7 @@ double atof( char s[] )
             exponent--;
         }
     }
+
     return result;
 }
 
