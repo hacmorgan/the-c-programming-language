@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> /* for atof */
+#include <math.h>
 
 #define MAXOP 100
 #define NUMBER '0'
@@ -7,6 +8,7 @@
 int getop( char [] );
 void push( double );
 double pop( void );
+double fmod( double, double );
 
 /* reverse polish notation calculator */
 /* we will start with one monolithic file, and aim to split it up later */
@@ -40,6 +42,14 @@ int main()
                 printf( "Error: division by zero!\n" );
             }
             break;
+        case '%':
+          op2 = pop();
+          if ( op2 != 0.0 ) {
+              push( fmod( pop(), op2 ) );
+          } else {
+              printf( "error: division by zero!\n" );
+          }
+          break;
         case '\n':
             printf( "\t%.8g\n", pop() );
             break;
@@ -85,7 +95,7 @@ void ungetch( int );
 
 int getop( char s[] )
 {
-    int i, c;
+    int i, c, sign;
 
     /* skip whitespace */
     while ( (s[0] = c = getch()) == ' ' || c == '\t' ) {
@@ -93,11 +103,21 @@ int getop( char s[] )
     }
 
     s[1] = '\0';
-    if ( !isdigit(c) && c != '.' ) {
+    if ( !isdigit(c) && c != '.' && c != '-' ) {
         return c; /* not a number */
     }
 
     i = 0;
+    if ( c == '-' ) {
+        sign = -1;
+        s[++i] = c = getch();
+        if ( !isdigit(c) && c != '.' ) {
+            ungetch(c);
+            return s[--i];
+        }
+    } else {
+        sign = 1;
+    }
     if ( isdigit(c) ) { /* collect integer component */
         while ( isdigit( s[++i] = c = getch() ) ) {
             ;
@@ -117,3 +137,20 @@ int getop( char s[] )
 }
 
 
+#define BUFSIZE 100
+char buf[BUFSIZE]; /* buffer for ungetch */
+int bufp = 0;      /* next free position in buffer */
+
+int getch( void )  /* get a (possibly pushed back) character */
+{
+    return ( bufp > 0 ) ? buf[--bufp] : getchar();
+}
+
+void ungetch( int c ) /* push character back onto the buffer */
+{
+    if ( bufp >= BUFSIZE ) {
+        printf( "ungetch: too many characters\n" );
+    } else {
+        buf[bufp++] = c;
+    }
+}
