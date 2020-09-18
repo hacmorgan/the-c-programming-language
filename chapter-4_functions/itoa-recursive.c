@@ -20,6 +20,26 @@ void itoa( int n, char s[] )
     }
 }
 
+void reverse( char s[] )
+{
+    static int i, j, first;
+    int c;
+
+    c = s[i++];
+    if ( first == 0 ) {
+        first = c;
+    }
+
+    if ( c != '\0' ) {
+        reverse(s);
+        s[j++] = c;
+    }
+
+    if ( c == first ) {
+        s[j++] = '\0';
+    }
+}
+
 int main()
 {
     int largestNegativeNumber = -2147483648;
@@ -27,5 +47,10 @@ int main()
     char s[10];
     itoa( n, s );
     printf( "n as int: %d, n as string: %s\n", n, s );
+
+    char r[10] = "Hello!";
+    printf( "Forward string: %s\n", r );
+    reverse(r);
+    printf( "Reversed string: %s\n", r );
     return 0;
 }
