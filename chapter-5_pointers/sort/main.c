@@ -2,13 +2,13 @@
 
 int main()
 {
-    static char *lineptr[MAXLINES]; /* pointers to text lines */
+    /* static char *lineptrr[MAXLINES]; /\* pointers to text lines *\/ */
 
     int nlines;
 
-    if ( (nlines = readlines(lineptr, MAXLINES)) >= 0 ) {
-        qsort( lineptr, 0, nlines-1 );
-        writelines( lineptr, nlines );
+    if ( (nlines = readlines(lineptrr, MAXLINES)) >= 0 ) {
+        qsort( lineptrr, 0, nlines-1 );
+        writelines( lineptrr, nlines );
         return 0;
     } else {
         printf( "error: input too big to sort\n" );

@@ -7,7 +7,7 @@ int readlines( char *lineptrr[], int maxlines )
 
     nlines = 0;
 
-    while ( (len = getline(line, MAXLEN)) > 0 ) {
+    while ( (len = getlinee(line, MAXLEN)) > 0 ) {
         if ( nlines >= maxlines || ( p = alloc(len) ) == NULL ) {
             return -1;
         } else {
