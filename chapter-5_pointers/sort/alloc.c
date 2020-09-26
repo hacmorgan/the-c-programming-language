@@ -1,7 +1,7 @@
 #define ALLOCSIZE 10000
 
 static char allocbuf[ALLOCSIZE];  /* storage for alloc */
-static char *allocp;              /* next free position */
+static char *allocp = allocbuf;              /* next free position */
 
 char *alloc( int n )
 {

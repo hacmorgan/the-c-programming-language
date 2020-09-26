@@ -12,5 +12,5 @@ void writelines( char *lineptrr[], int nlines );
 void qsort( char *lineptrr[], int left, int right );
 void swap( char *v[], int left, int right );
 
-int getlinee( char *s, int lim );
+int getline( char *s, int lim );
 char *alloc( int );

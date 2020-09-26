@@ -1,6 +1,6 @@
 #include "sort.h"
 
-int getlinee( char *s, int lim )
+int getline( char *s, int lim )
 {
     int c, i;
 
