@@ -1,22 +1,35 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "calc.h"
+#include "rpn-args.h"
 
-#define MAXOP 100
 
-int main()
+int main ( int argc, char *argv[] )
 {
-    int type;
-    double op2;
-    double variables[26] = { 0 };
-    double mostRecentPrint;
-    char s[MAXOP];
+    int i;
+    for ( i = 1 ; i < argc ; i++ ) {
+        parseOperand( argv[i] );
+    }
+    printf( "\t%.8g\n", pop() );
+}
 
-    while ( (type=getop(s)) != EOF ) {
-        switch (type) {
+
+
+int getop( char *operand )
+{
+    if ( !isdigit(*operand) && *operand != '.' && *operand != '-' ) {
+        return *operand;  /* not a number */
+    } else {
+        return NUMBER;
+    }
+}
+
+void parseOperand( char *operand )
+{
+    static double op2;
+    static double variables[26];
+    static double mostRecentPrint;
+
+    switch ( getop( operand ) ) {
         case NUMBER:
-            push( atof(s) );
+            push( atof( operand ) );
             break;
         case '+':
             push( pop() + pop() );
@@ -44,10 +57,6 @@ int main()
               printf( "error: division by zero!\n" );
           }
           break;
-        case '\n':
-            mostRecentPrint = pop();
-            printf( "\t%.8g\n", mostRecentPrint );
-            break;
         case 'f':
             mostRecentPrint = top(); /* print top element */
             break;
@@ -71,32 +80,33 @@ int main()
             push( pow( pop(), op2 ) );
             break;
         case 'v': /* store result of pop() in a variable */
-            if ( (type=getop(s)) == '\n' ) {
-                top();
-            } else if ( type >= 'a' && type <= 'z' ) {
-                variables[(type-'a')] = pop();
-            } else if ( type == '=' ) {
+            operand++;
+            if ( *operand == '\0' ) {
+                printf( "error: no variable name supplied" );
+            } else if ( *operand >= 'a' && *operand <= 'z' ) {
+                variables[(*operand-'a')] = pop();
+            } else if ( *operand == '=' ) {
                 mostRecentPrint = pop();
             } else {
-                printf( "%c cannot be used as a variable. Please use a lowercase letter.\n" );
+                printf( "%c cannot be used as a variable. ", *operand );
+                printf( "Please use a lowercase letter.\n" );
             }
             break;
         case 'a': /* push a stored variable back onto the stack */
-            if ( (type=getop(s)) == '\n' ) {
-                top();
-            } else if ( type >= 'a' && type <= 'z' ) {
-                push( variables[(type-'a')] );
-            } else if ( type == '=' ) {
+            operand++;
+            if ( *operand == '\0' ) {
+                printf( "error: no variable name supplied" );
+            } else if ( *operand >= 'a' && *operand <= 'z' ) {
+                push( variables[(*operand-'a')] );
+            } else if ( *operand == '=' ) {
                 push( mostRecentPrint );
             } else {
-                printf( "%c cannot be used as a variable. Please use a lowercase letter.\n" );
+                printf( "%c cannot be used as a variable. ", *operand );
+                printf( "Please use a lowercase letter.\n" );
             }
             break;
         default:
-            printf( "error: unknown command %s\n", s );
+            printf( "error: unknown command %s\n", operand );
             break;
-        }
     }
-
-    return 0;
 }

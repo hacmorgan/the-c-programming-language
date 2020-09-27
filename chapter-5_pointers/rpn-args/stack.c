@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include "calc.h"
-
-#include <stdio.h>
-#include "calc.h"
+#include "rpn-args.h"
 
 #define MAXVAL 100 /* maximum depth of value stack */
 
