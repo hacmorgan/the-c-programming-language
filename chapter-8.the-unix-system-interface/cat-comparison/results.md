@@ -1,0 +1,15 @@
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.86s user 1.55s system 101% cpu 2.385 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.89s user 1.50s system 101% cpu 2.364 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.85s user 1.56s system 101% cpu 2.380 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.87s user 1.53s system 101% cpu 2.374 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.85s user 1.54s system 101% cpu 2.366 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  61.27s user 2.62s system 99% cpu 1:03.89 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  60.83s user 2.69s system 99% cpu 1:03.53 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  61.31s user 2.52s system 99% cpu 1:03.82 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  61.10s user 2.61s system 99% cpu 1:03.72 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  61.24s user 2.41s system 99% cpu 1:03.65 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.74s user 2.02s system 101% cpu 2.727 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.73s user 2.00s system 101% cpu 2.708 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.76s user 1.97s system 101% cpu 2.704 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.80s user 1.93s system 101% cpu 2.699 total
+( for i in {1..1000}; do; $catprog /tmp/bigfile > /dev/null; done; )  0.79s user 1.93s system 101% cpu 2.692 total
